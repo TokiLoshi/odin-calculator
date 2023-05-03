@@ -65,7 +65,11 @@ function parseInput(userInput){
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       console.log(`We have an operand ${problem[i]} at iteration ${i}`)
-      operand = problem[i]
+      if(i === lengthInput -1){
+        return answer}
+        else{
+          operand = problem[i]
+        }
       
       // if the count is zero this is our first time assigning firstNum
       if (count === 0){
