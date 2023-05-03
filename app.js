@@ -58,8 +58,6 @@ function parseInput(userInput){
   let secondNum = 0;
   let answer = 0;
   let count = 0;
-  let loopNumOne = 0;
-  let nextTwo = 0;
 
   for(i=0; i <= lengthInput - 1; i++){ 
     console.log(`Loop iteration: ${i}`)
@@ -94,7 +92,6 @@ function parseInput(userInput){
       // If there is another operand in the array get the next index of it
       if (remainingArray.includes('+')){
         console.log(`Found another operand in ${remainingArray} it is ${remainingArray[i]} at ${i}`)
-        
         let nextOperator = remainingArray.findIndex((nextOperator) => 
         nextOperator === '+')
         console.log(`Next operator index at: ${nextOperator}`)
@@ -107,98 +104,14 @@ function parseInput(userInput){
         // Else the second number is the rest of the array 
         secondNum = parseInt(remainingArray)
         console.log(`Second number with no remaining array: ${secondNum}`)
-        // console.log(`Time to calculate the answer with ${firstNum} a ${typeof firstNum} operator ${operand} and ${secondNum} a ${typeof secondNum}`)
-        // answer = operate(firstNum, operand, secondNum)
-        // console.log(`Answer is: ${answer}`)
       }
       console.log(`Time to calculate the answer with ${firstNum} a ${typeof firstNum} operator ${operand} and ${secondNum} a ${typeof secondNum}`)
-      answer = operate(firstNum, operand, secondNum)
-      console.log(`Answer is: ${answer}`)
-     
-      
       
       // Answer should be updated with operate on first and second number
+      answer = operate(firstNum, operand, secondNum)
+      console.log(`Answer is: ${answer}`)
     }
-
   }
-
-  // for(i=0; i <= lengthInput - 1; i++){
-  //   console.log(`Loop: ${i}: dealing with: ${problem[i]}`)
-    
-  //   // If we have an operators we want to assign each
-  //   if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
-      
-  //     // Assign the operator
-  //     operand = problem[i]
-  //     console.log(`Operand ${problem[i]} in iteration ${i} of the loop`)
-
-  //     // If it's not 0 then it should be updated to the answer?
-  //     if (firstNum !== 0) {
-  //       console.log(`First num is already calculated ${firstNum} and can be updated`)
-  //       firstNum = parseInt(answer);
-  //       console.log(`First num should be answer of ${answer}`)
-  //     }
-  //     else{
-  //       firstNum = problem.slice(0, i)
-  //       loopNumOne = parseInt(firstNum.join('').replace(' ', ''))
-  //       console.log(`First Num ${firstNum} hasn't been set before`)
-  //       console.log(`Setting loop for first timeLoop number one: ${loopNumOne}`)
-  //     }
-
-      // Check the first number 
-      // Determine if there's another operand in the array
-      // If there is then get the index of it
-      // Set the second number from this index until that index 
-      // Operate 
-      // Update answer 
-  //   }
-  // }
-
-      // Commenting this all out for now 
-  //     console.log(`Outside of conditionals  first num before setting: ${firstNum}`)
-  //     console.log(`Outside of conditionals second num before setting ${secondNum}`)
-  //     firstNum = problem.slice(0, i)
-  //     secondNum = problem.slice(i+1, lengthInput)
-  //     console.log(`first num after setting: ${firstNum}`)
-  //     console.log(`second num after setting ${secondNum}`)
-
-  //     loopNumOne = parseInt(firstNum.join('').replace(' ', ''))
-  //     nextTwo = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
-  //     answer += operate(loopNumOne, operand, nextTwo)
-  //     count +=1
-  //     firstNum = answer
-      
-  //     console.log(`First loop out of conditional: ${loopNumOne}`)
-  //     console.log(`Loop second num cleaned: ${nextTwo}`)
-  //     console.log(`Updating answer after cleaned second number: ${answer}`)
-  //   }
-    
-  //   console.log(`After if statement updating answer with: ${answer}`)
-  //   console.log(`End of loop round ${i} is number ${problem[i]}`)
-  // }
-  // if (count >= 1){
-  //   console.log(`We should already have first num ${firstNum} secondNum ${secondNum} operand ${operand} and answer ${answer}`)
-  //   if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
-  //     console.log(`We have our next operator? ${problem[i]}`)
-  //   }
-  // }
-
-
-  // Older - was working without this 
-  // let getNum = parseInt(firstNum.join('').replace(' ', ''))
-  // console.log(`After loop firstnum: ${firstNum}`)
-  // console.log(getNum)
-  // console.log(`After loop operand: ${operand}`)
-  
-  // console.log(`After loop second num: ${secondNum}`)
-  // let nextNum = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
-  // console.log(nextNum)
-
-  // const firstSum = operate(getNum, operand, nextNum)
-  // console.log(`ANSWER TO FIRST SUM: ${firstSum}`)
-  // End older - was working without this 
-
-
   return answer;
 }
 
