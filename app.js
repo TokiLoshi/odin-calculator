@@ -1,27 +1,23 @@
 function add(num1, num2)
 {
-  console.log('Function to add')
   const answer = num1 + num2
   return answer
 }
 
 function subtract(num1, num2)
 {
-  console.log('Function to subtract')
   const answer = num1 - num2
   return answer
 }
 
 function multiply(num1, num2)
 {
-  console.log('Function to multiply')
   const answer = num1 * num2
   return answer
 }
 
 function divide(num1, num2)
 {
-  console.log('Function to multiply')
   let answer;
   if (num2 === 0){
     answer = "You can't divide by zero"
@@ -32,11 +28,8 @@ function divide(num1, num2)
   return answer
 }
 
+// Do the first addition
 function operate(firstNum, operator, secondNum){
-  console.log(`First number: ${firstNum}`)
-  console.log(`Second number: ${secondNum}`)
-  console.log(`Operator: ${operator}`)
-
   if (operator === '+'){
     return add(firstNum, secondNum)
   }
@@ -59,42 +52,70 @@ function parseInput(userInput){
   let problem = Array.from(userInput)
   const lengthInput = problem.length
   let firstNum = "";
-  let operand;
+  let operand = "";
   let secondNum = "";
+  let answer = 0;
+  let loopNumOne = "";
+  let nextTwo = "";
 
   for(i=0; i <= lengthInput - 1; i++){
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
+      // If we have an operators we want to assign each
       operand = problem[i]
-      firstNum = problem.slice(0, i)
-      console.log(`First number is: ${firstNum}`)
-      console.log(`Operand is: ${operand}`)
+      if (firstNum !== "") {
+        console.log("First num is not an empty string")
+    
+        firstNum = parseInt(answer);
+        console.log(`First num should be answer of ${answer}`)
+      }
+      else{
+        console.log("You got an empty string")
+        
+        firstNum = problem.slice(0, i)
+        loopNumOne = parseInt(firstNum.join('').replace(' ', ''))
+        console.log(`First num in conditional: ${loopNumOne}`)
+      }
+      // firstNum = problem.slice(0, i)
       secondNum = problem.slice(i+1, lengthInput)
-      console.log(`Second num: ${secondNum}`)
+
+      // Clean everything up 
+      // loopNumOne = parseInt(firstNum.join('').replace(' ', ''))
+      nextTwo = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
+      console.log(`First loop out of conditional: ${loopNumOne}`)
+      console.log(`Loop second num cleaned: ${nextTwo}`)
+      answer += operate(loopNumOne, operand, nextTwo)
+      console.log(`Updating answer after cleaned second number: ${answer}`)
+      // i++
     }
+    
+    console.log(`After if statement updating answer with: ${answer}`)
 
-    console.log(`${i} is ${problem[i]}`)
+    console.log(`Round of loop ${i} is number ${problem[i]}`)
   }
-  let getNum = parseInt(firstNum.join('').replace(' ', ''))
-  console.log(`After loop firstnum: ${firstNum}`)
-  console.log(getNum)
-  console.log(`After loop operand: ${operand}`)
+  if (operand !== ""){
+  console.log(`Answer after loop ${answer}`)
+}
+  // let getNum = parseInt(firstNum.join('').replace(' ', ''))
+  // console.log(`After loop firstnum: ${firstNum}`)
+  // console.log(getNum)
+  // console.log(`After loop operand: ${operand}`)
   
-  console.log(`After loop second num: ${secondNum}`)
-  let nextNum = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
-  console.log(nextNum)
+  // console.log(`After loop second num: ${secondNum}`)
+  // let nextNum = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
+  // console.log(nextNum)
 
-  const firstSum = operate(getNum, operand, nextNum)
-  console.log(`ANSWER TO FIRST SUM: ${firstSum}`)
+  // const firstSum = operate(getNum, operand, nextNum)
+  // console.log(`ANSWER TO FIRST SUM: ${firstSum}`)
+  return answer;
   return firstSum;
 }
 
 // Store everything in array 
 function getInput(){
-  console.log(`Time to get input`)
   // Add eventlisteners to all buttons
-
   let userInput = []
 
+  // Update screen as user adds input
   const screen = document.querySelector('.screen')
 
   // Get the number buttons 
@@ -105,13 +126,10 @@ function getInput(){
 
     // Handle if clear button was used - should get rid of the zero
     if (userInput[0] === 0){
-      console.log("First number is 0")
       userInput = []
     }
     userInput.push(numclick)
     screen.textContent = userInput.join(' ')
-    console.log(`Button id: ${numclick}`)
-    console.log(`UserInput: ${userInput}`)
     
   })
 })
@@ -123,7 +141,7 @@ operations.forEach((button) => {
     if (opclick === 'equal'){
       userInput.join(' ')
       let answer = parseInput(userInput)
-      console.log(`We got the answer back: ${answer}`)
+      console.log(`We got the answer back in operations function: ${answer}`)
       userInput = [answer]
       screen.textContent = answer
       
@@ -141,30 +159,19 @@ operations.forEach((button) => {
       userInput.push('x')
     }
     else if(opclick === 'clear'){
-      console.log
       userInput = [0]
     }
     else {
-     
-      console.log("No equals button yet")
-    userInput.push(opclick)
-    
+      userInput.push(opclick)
     }
-    console.log(`Op clicked: ${opclick}`)
-    console.log(`User input: ${userInput}`)
+    // Update screen
     screen.textContent = userInput.join(' ')
   })
 })
  
 }
 
-
-console.log("Testing the operator function")
-let numberOne = 20
-let operand = '+'
-let numberTwo = 4
-const answer = operate(numberOne, operand, numberTwo)
-console.log(`Answer is ${answer}`)
-
 let input = getInput()
-console.log(`What's being returned: ${input}`)
+if (input){
+  console.log(`What's being returned: ${input}`)
+}

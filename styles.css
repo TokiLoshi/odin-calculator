@@ -1,6 +1,6 @@
 body { 
 
-  font-family: Monospace;
+  font-family: monospace;
 }
 h2 {
 
@@ -16,11 +16,12 @@ h2 {
 .screen {
 
   text-align: center;
-  background: white;
+  background: rgb(196, 177, 177);
   color: black;
-  border: 1px solid black;
+  border: 2px solid rgb(61, 59, 59);
   border-radius: 5px;
   padding: 10px;
+  font-family: papyrus;
 }
 .numberpad {
   display: flex;
@@ -43,4 +44,8 @@ h2 {
   padding: 15px;
   border-radius: 10px;
 
+}
+.operators button{
+  background-color: rgb(62, 0, 128);
+  color: white;
 }
