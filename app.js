@@ -60,25 +60,32 @@ function parseInput(userInput){
   const lengthInput = problem.length
   let firstNum = "";
   let operand;
-  console.log(`firstNum: ${firstNum}`)
   let secondNum = "";
+
   for(i=0; i <= lengthInput - 1; i++){
-    if (problem[i] === ' ' && typeof operand === undefined){
-      console.log(`We have a space at ${i}`)
-      firstNum = firstNum + problem[i]
-      console.log(`First number where operand is not defined: ${firstNum}`)
-    }
-    else if (problem[i] === '+' || problem[i] === '-' || problem[i] === '*' || problem[i] === '/'){
+    if (problem[i] === '+' || problem[i] === '-' || problem[i] === '*' || problem[i] === '/'){
       operand = problem[i]
+      firstNum = problem.slice(0, i)
+      console.log(`First number is: ${firstNum}`)
       console.log(`Operand is: ${operand}`)
+      secondNum = problem.slice(i+1, lengthInput)
+      console.log(`Second num: ${secondNum}`)
     }
-    if (operand) {
-      secondNum = secondNum + problem[i]
-    }
+
     console.log(`${i} is ${problem[i]}`)
   }
-  console.log(`First number: ${firstNum}`)
+  let getNum = parseInt(firstNum.join('').replace(' ', ''))
+  console.log(`After loop firstnum: ${firstNum}`)
+  console.log(getNum)
+  console.log(`After loop operand: ${operand}`)
+  
+  console.log(`After loop second num: ${secondNum}`)
+  let nextNum = parseInt((secondNum.join('').replace(' ', '')).replace(' ', ''))
+  console.log(nextNum)
 
+  const firstSum = operate(getNum, operand, nextNum)
+  console.log(`ANSWER TO FIRST SUM: ${firstSum}`)
+  return firstSum;
 }
 
 // Store everything in array 
@@ -114,8 +121,12 @@ operations.forEach((button) => {
   button.addEventListener('click', () => {
     const opclick = button.id
     if (opclick === 'equal'){
-      parseInput(userInput.join(' '))
-      userInput = [0]
+      userInput.join(' ')
+      let answer = parseInput(userInput)
+      console.log(`We got the answer back: ${answer}`)
+      userInput = [answer]
+      screen.textContent = answer
+      
     }
     else if (opclick === 'plus'){
       userInput.push('+')
