@@ -63,7 +63,7 @@ function parseInput(userInput){
   let secondNum = "";
 
   for(i=0; i <= lengthInput - 1; i++){
-    if (problem[i] === '+' || problem[i] === '-' || problem[i] === '*' || problem[i] === '/'){
+    if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       operand = problem[i]
       firstNum = problem.slice(0, i)
       console.log(`First number is: ${firstNum}`)
