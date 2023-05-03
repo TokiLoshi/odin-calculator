@@ -9,8 +9,9 @@ h2 {
 
 .container{
   /* margin: 20px; */
-  background: purple;
+  background: rgb(115, 50, 133);
   border-radius: 10px;
+  padding: 10px;
 
 }
 .screen {
@@ -43,9 +44,12 @@ h2 {
   margin: 5px;
   padding: 15px;
   border-radius: 10px;
+  background: rgb(168, 151, 183);
+  margin-bottom: 10px;
 
 }
 .operators button{
   background-color: rgb(62, 0, 128);
   color: white;
+    margin-bottom: 10px;
 }
