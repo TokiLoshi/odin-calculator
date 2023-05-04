@@ -57,7 +57,6 @@ function parseInput(userInput){
   let operand = "";
   let secondNum = 0;
   let answer = 0;
-  let count = 0;
 
   for(i=0; i <= lengthInput - 1; i++){ 
     console.log(`Loop iteration: ${i}`)
@@ -102,10 +101,11 @@ function getInput(){
 
     // Handle if clear button was used - should get rid of the zero
     // This causes bugs later
-    if (userInput[0] === 0){
+    // if (userInput[0] === 0){
+    //   console.log("The userinput function is currently zero we should be at the beginning with a clear array")
 
-      userInput = []
-    }
+    //   userInput = []
+    // }
     userInput.push(numclick)
     screen.textContent = userInput.join(' ')
     
@@ -160,6 +160,7 @@ operations.forEach((button) => {
     // console.log(`Second Operator: ${secondOperator}`)
     // console.log(`Length of userinput after assigning operator: ${userInput.length}`)
     
+    // User wants to evaluate multiple numbers - do first pair 
     if (firstOperator !== '' && secondOperator !== ''){
       let toCompute = userInput.slice(0, (userInput.length -1))
       console.log(`To compute: ${toCompute}`)
@@ -170,13 +171,18 @@ operations.forEach((button) => {
     }
 
     // I know this is going to cause bugs later
+    // User wants to compute the answer 
     if (opclick === 'equal' && firstOperator !== ''){
       console.log('User hit equals')
       answer = parseInput(userInput)
       userInput = [answer]
     }
-    if (opclick === 'clear'){
-      userInput = [0]
+    else if (opclick === 'clear'){
+      userInput = []
+      firstOperator = ""
+      secondOperator = ""
+      console.log(`User wanted to clear and it is now ${userInput.length}`)
+      
     }
 
     // else if (opclick === 'equal'){
@@ -207,7 +213,12 @@ operations.forEach((button) => {
       
     // }
     //Update screen
+    if (userInput.length === 0){
+      screen.textContent = 0
+    }
+    else {
     screen.textContent = userInput.join(' ')
+  }
   })
 })
  
