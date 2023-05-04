@@ -162,25 +162,11 @@ operations.forEach((button) => {
       userInput = [answer]
       firstOperator = ''
       secondOperator = ''
+
+      // Don't let them divide by zero
       if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
         userInput = userInput
-        // Disable buttons from further operations 
         disableButtons()
-        // let addbutton = document.querySelector('#plus')
-        // addbutton.setAttribute('disabled', true);
-        // addbutton.style.background = 'grey';
-        // let minusbutton = document.querySelector('#minus')
-        // minusbutton.setAttribute('disabled', true)
-        // minusbutton.style.background = 'grey';
-        // let multibutton = document.querySelector('#multiply')
-        // multibutton.setAttribute('disabled', true)
-        // multibutton.style.background = 'grey';
-        // let dividebutton = document.querySelector('#divide')
-        // dividebutton.setAttribute('disabled', true)
-        // dividebutton.style.background = 'grey';
-        // let equalbutton = document.querySelector('#equal')
-        // equalbutton.setAttribute('disabled', true);
-        // equalbutton.style.background = 'grey';
         zeroStatus = true;
       }
       userInput = [answer]
@@ -218,21 +204,6 @@ operations.forEach((button) => {
         userInput = userInput
         // Disable buttons from further operations 
         disableButtons()
-        // let addbutton = document.querySelector('#plus')
-        // addbutton.setAttribute('disabled', true);
-        // addbutton.style.background = 'grey';
-        // let minusbutton = document.querySelector('#minus')
-        // minusbutton.setAttribute('disabled', true)
-        // minusbutton.style.background = 'grey';
-        // let multibutton = document.querySelector('#multiply')
-        // multibutton.setAttribute('disabled', true)
-        // multibutton.style.background = 'grey';
-        // let dividebutton = document.querySelector('#divide')
-        // dividebutton.setAttribute('disabled', true)
-        // dividebutton.style.background = 'grey';
-        // let equalbutton = document.querySelector('#equal')
-        // equalbutton.setAttribute('disabled', true);
-        // equalbutton.style.background = 'grey';
         zeroStatus = true;
       }
       // else {
