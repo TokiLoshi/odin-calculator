@@ -20,7 +20,7 @@ function divide(num1, num2)
 {
   let answer;
   if (num2 === 0){
-    answer = "You can't divide by zero"
+    answer = "Error! Dividing by zero? 😔"
   }
   else {
     answer = num1 / num2
@@ -92,6 +92,7 @@ function getInput(){
   const screen = document.querySelector('.screen')
   let firstOperator = ""
   let secondOperator = ""
+  let zeroStatus = false
 
   // Get the number buttons 
   const buttons = document.querySelectorAll('.numbutton')
@@ -167,7 +168,30 @@ operations.forEach((button) => {
       answer = parseInput(toCompute)
       console.log(`Getting an answer: ${answer}`)
       userInput = [answer]
+      if (answer === "Error! Dividing by zero? 😔"){
+        userInput = userInput
+        // Disable buttons from further operations 
+        let addbutton = document.querySelector('#plus')
+        addbutton.setAttribute('disabled', true);
+        addbutton.style.background = 'grey';
+        let minusbutton = document.querySelector('#minus')
+        minusbutton.setAttribute('disabled', true)
+        minusbutton.style.background = 'grey';
+        let multibutton = document.querySelector('#multiply')
+        multibutton.setAttribute('disabled', true)
+        multibutton.style.background = 'grey';
+        let dividebutton = document.querySelector('#divide')
+        dividebutton.setAttribute('disabled', true)
+        dividebutton.style.background = 'grey';
+        let equalbutton = document.querySelector('#equal')
+        equalbutton.setAttribute('disabled', true);
+        equalbutton.style.background = 'grey';
+
+        zeroStatus = true;
+      }
+      else {
       userInput.push(secondOperator)
+    }
     }
 
     // I know this is going to cause bugs later
@@ -182,9 +206,33 @@ operations.forEach((button) => {
       firstOperator = ""
       secondOperator = ""
       console.log(`User wanted to clear and it is now ${userInput.length}`)
+      if (zeroStatus === true) {
+      location.reload();
+      }
       
     }
 
+    
+    //Update screen
+    if (userInput.length === 0){
+      screen.textContent = 0
+    }
+    else {
+    screen.textContent = userInput.join(' ')
+  }
+  })
+})
+ 
+}
+
+let input = getInput()
+if (input){
+  console.log(`What's being returned: ${input}`)
+}
+
+
+
+    // This part of operator button from the getInput functions
     // else if (opclick === 'equal'){
     //   userInput.join(' ')
     //   let answer = parseInput(userInput)
@@ -210,26 +258,7 @@ operations.forEach((button) => {
     // }
     // else {
     //   userInput.push(opclick)
-      
     // }
-    //Update screen
-    if (userInput.length === 0){
-      screen.textContent = 0
-    }
-    else {
-    screen.textContent = userInput.join(' ')
-  }
-  })
-})
- 
-}
-
-let input = getInput()
-if (input){
-  console.log(`What's being returned: ${input}`)
-}
-
-
 
 
 
