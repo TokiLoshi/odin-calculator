@@ -59,7 +59,6 @@ function parseInput(userInput){
   let answer = 0;
 
   for(i=0; i <= lengthInput - 1; i++){ 
-    console.log(`Loop iteration: ${i}`)
 
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
@@ -67,16 +66,21 @@ function parseInput(userInput){
       firstNum = parseInt(problem.slice(0, i).join(''))
       operand = problem[i]
       secondNum = parseInt(problem.slice(i+1).join(''))
-      console.log(`First num: ${firstNum}`)
-      console.log(`Operand: ${operand}`)
-      console.log(`Second num: ${secondNum}`)
-      let remainingArray = problem.slice(i+1).join('')
-      console.log(`RemainingArray ${remainingArray}`)
 
-      
+      console.log(`First num: ${firstNum}`)
+      console.log(`Type first num: ${typeof firstNum}`)
+      console.log(`Operand: ${operand}`)
+      console.log(`Type of operand: ${operand}`)
+      console.log(`Second num: ${secondNum}`)
+      console.log(`Type of second num: ${typeof secondNum}`)
+
       // Answer should be updated with operate on first and second number
       answer = operate(firstNum, operand, secondNum)
-      console.log(`Answer is: ${answer}`)
+      console.log(`Answer from parse: ${answer} which is type ${typeof answer}`)
+      if (answer === NaN) {
+        console.log("***Answer returned not a Number !$#%&*")
+        answer = "Error"
+      }
       return answer;
     }
   }
@@ -100,26 +104,20 @@ function getInput(){
   button.addEventListener('click', () => {
     const numclick = button.id
 
-    // Handle if clear button was used - should get rid of the zero
-    // This causes bugs later
-    // if (userInput[0] === 0){
-    //   console.log("The userinput function is currently zero we should be at the beginning with a clear array")
-
-    //   userInput = []
-    // }
     userInput.push(numclick)
+    console.log(`UserInput has been updated by number button ${userInput}`)
     screen.textContent = userInput.join(' ')
     
   })
 })
 
+// Operation buttons 
 const operations = document.querySelectorAll('.opbutton')
 operations.forEach((button) => {
   button.addEventListener('click', () => {
-    console.log(`Length of user Input: ${userInput.length}`)
     const opclick = button.id
 
-    // One option might be to create two operators and store them
+    // Assign operators if clicked 
     if (opclick === 'plus'){
       userInput.push('+')
       if (firstOperator === ""){
@@ -156,18 +154,42 @@ operations.forEach((button) => {
         secondOperator = '/' 
       }
     }
-    // console.log(`Checked for + - x and / and we have userInput: ${userInput}`)
-    // console.log(`First operator: ${firstOperator}`)
-    // console.log(`Second Operator: ${secondOperator}`)
-    // console.log(`Length of userinput after assigning operator: ${userInput.length}`)
-    
+    console.log(`End assigning operators in Event Listener: ${firstOperator} and second ${secondOperator}`)
+
+    if (opclick === 'equal' && firstOperator !== ''){
+      console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
+      answer = parseInput(userInput)
+      userInput = [answer]
+      firstOperator = ''
+      secondOperator = ''
+      console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
+    }
+
     // User wants to evaluate multiple numbers - do first pair 
     if (firstOperator !== '' && secondOperator !== ''){
-      let toCompute = userInput.slice(0, (userInput.length -1))
+      console.log(`User Input before slicing to compute: ${userInput}`)
+      console.log(`End unit: ${userInput[userInput.length - 1]}`)
+      let endUnit = userInput[userInput.length - 1]
+      if (typeof endUnit === NaN){
+        let toCompute = userInput.slice(0, (userInput.length -1))
       console.log(`To compute: ${toCompute}`)
       answer = parseInput(toCompute)
-      console.log(`Getting an answer: ${answer}`)
+      }
+      else{
+        console.log(`Else statement activated so no slicing just computing ${userInput} and op1 ${firstOperator} and 2nd op ${secondOperator}`)
+        answer = parseInput(userInput)
+      }
+      // let toCompute = userInput.slice(0, (userInput.length -1))
+      // console.log(`To compute: ${toCompute}`)
+      // answer = parseInput(toCompute)
+      console.log(`Getting an answer in else: ${answer} type ${typeof answer} to update user input ${userInput}`)
       userInput = [answer]
+      console.log(`After answer first: ${firstOperator}`)
+      console.log(`After anser second operator: ${secondOperator}`)
+      console.log(`After getting answer the user in put is: ${userInput}`) 
+
+
+      // Don't let the uzer Divide by zero
       if (answer === "Error! Dividing by zero? 😔"){
         userInput = userInput
         // Disable buttons from further operations 
@@ -186,22 +208,26 @@ operations.forEach((button) => {
         let equalbutton = document.querySelector('#equal')
         equalbutton.setAttribute('disabled', true);
         equalbutton.style.background = 'grey';
-
         zeroStatus = true;
       }
-      else {
+      // else {
+      if (secondOperator !== ''){
+        if (userInput === NaN){
+          userInput = "ERROR"
+          console.log(`We got an error: ${userInput} please disable buttons`)
+          disableButtons()
+          console.log("Finished running disable buttons function")
+        }
+      console.log(`We're running else statment in line 213 on ${userInput} where firstop ${firstOperator} and ${secondOperator}`)
       userInput.push(secondOperator)
     }
     }
 
     // I know this is going to cause bugs later
     // User wants to compute the answer 
-    if (opclick === 'equal' && firstOperator !== ''){
-      console.log('User hit equals')
-      answer = parseInput(userInput)
-      userInput = [answer]
-    }
-    else if (opclick === 'clear'){
+    
+
+    if (opclick === 'clear'){
       userInput = []
       firstOperator = ""
       secondOperator = ""
@@ -209,7 +235,6 @@ operations.forEach((button) => {
       if (zeroStatus === true) {
       location.reload();
       }
-      
     }
 
     
@@ -219,7 +244,9 @@ operations.forEach((button) => {
     }
     else {
     screen.textContent = userInput.join(' ')
+    console.log(`Updating the screen where length of user input not zero: ${userInput} and type ${typeof userInput}`)
   }
+  console.log(`Operations done here? First op: ${firstOperator} second op: ${secondOperator} user input: ${userInput}`)
   })
 })
  
@@ -230,6 +257,48 @@ if (input){
   console.log(`What's being returned: ${input}`)
 }
 
+function disableButtons() {
+  let addbutton = document.querySelector('#plus')
+        addbutton.setAttribute('disabled', true);
+        addbutton.style.background = 'grey';
+        let minusbutton = document.querySelector('#minus')
+        minusbutton.setAttribute('disabled', true)
+        minusbutton.style.background = 'grey';
+        let multibutton = document.querySelector('#multiply')
+        multibutton.setAttribute('disabled', true)
+        multibutton.style.background = 'grey';
+        let dividebutton = document.querySelector('#divide')
+        dividebutton.setAttribute('disabled', true)
+        dividebutton.style.background = 'grey';
+        let equalbutton = document.querySelector('#equal')
+        equalbutton.setAttribute('disabled', true);
+        equalbutton.style.background = 'grey';
+}
+
+
+// Debugging: 
+// Test only using equals after an operation
+// 1) ***PASSES*** 1 (+) 2 (=) => 3 
+// 2) ***PASSES*** 1 (+) 6 (=) => 7 (+) 3 (=) => 10
+
+// Test using multiple operations 
+// 3)  ***PASSES*** 1 (+) 4 (+) => 5 +
+
+// Test using equals first and then multiple operations 
+// 4) ***PASSES*** 1 (+) 5 (=) => 6 + 4 + => 10 + 
+// 5) ***PASSES*** 1 (+) 6 (=) => 7 (+) 3 (+) => 10+ 5 (+) => 15
+
+// Test using multiple operations first and then equals
+// 6) ***PASSES*** 1 (+) 5 (+) => 6 (+) 4 (=) => 10
+
+// 7) ***PASSES*** 1 (+) 5 (+) => 6 + 4 (=) => 10 (+) 5 (=) => 15
+// 8) ***PASSES*** 1 (+) 5 (+) => 6 + 4 (=) => 10 (+) 5 (+) => 15+
+
+// Test using equals first and then multiple operations then equals
+// 9) ****PASSES*** 1 (+) 6 (=) => 7 + 3 + => 10 + 5 (=) => 15
+
+// Test using equals first and then multiple operations then equals then multiple operations
+// 10) ***PASSES**** 1 (+) 6 (=) => 7 (+) 3 (+) => 10 + 5 (=) => 15 (+) 5 (+) => 20+
 
 
     // This part of operator button from the getInput functions
