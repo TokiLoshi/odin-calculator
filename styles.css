@@ -38,6 +38,12 @@ h2 {
   margin: 10px;
   border-radius: 10px;
 }
+.numbutton:hover {
+  background: rgb(212, 172, 240);
+  padding: 16px;
+
+
+}
 .operators {
   display: flex;
   justify-content: center;
@@ -52,4 +58,10 @@ h2 {
   background-color: rgb(62, 0, 128);
   color: white;
     margin-bottom: 10px;
+}
+
+.operators button:hover{
+  background-color: rgb(108, 29, 191);
+  padding: 16px;
+
 }
