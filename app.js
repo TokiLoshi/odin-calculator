@@ -162,6 +162,30 @@ operations.forEach((button) => {
       userInput = [answer]
       firstOperator = ''
       secondOperator = ''
+      if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
+        userInput = userInput
+        // Disable buttons from further operations 
+        disableButtons()
+        // let addbutton = document.querySelector('#plus')
+        // addbutton.setAttribute('disabled', true);
+        // addbutton.style.background = 'grey';
+        // let minusbutton = document.querySelector('#minus')
+        // minusbutton.setAttribute('disabled', true)
+        // minusbutton.style.background = 'grey';
+        // let multibutton = document.querySelector('#multiply')
+        // multibutton.setAttribute('disabled', true)
+        // multibutton.style.background = 'grey';
+        // let dividebutton = document.querySelector('#divide')
+        // dividebutton.setAttribute('disabled', true)
+        // dividebutton.style.background = 'grey';
+        // let equalbutton = document.querySelector('#equal')
+        // equalbutton.setAttribute('disabled', true);
+        // equalbutton.style.background = 'grey';
+        zeroStatus = true;
+      }
+      userInput = [answer]
+      firstOperator = ''
+      secondOperator = ''
       console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
     }
 
@@ -190,24 +214,25 @@ operations.forEach((button) => {
 
 
       // Don't let the uzer Divide by zero
-      if (answer === "Error! Dividing by zero? 😔"){
+      if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
         userInput = userInput
         // Disable buttons from further operations 
-        let addbutton = document.querySelector('#plus')
-        addbutton.setAttribute('disabled', true);
-        addbutton.style.background = 'grey';
-        let minusbutton = document.querySelector('#minus')
-        minusbutton.setAttribute('disabled', true)
-        minusbutton.style.background = 'grey';
-        let multibutton = document.querySelector('#multiply')
-        multibutton.setAttribute('disabled', true)
-        multibutton.style.background = 'grey';
-        let dividebutton = document.querySelector('#divide')
-        dividebutton.setAttribute('disabled', true)
-        dividebutton.style.background = 'grey';
-        let equalbutton = document.querySelector('#equal')
-        equalbutton.setAttribute('disabled', true);
-        equalbutton.style.background = 'grey';
+        disableButtons()
+        // let addbutton = document.querySelector('#plus')
+        // addbutton.setAttribute('disabled', true);
+        // addbutton.style.background = 'grey';
+        // let minusbutton = document.querySelector('#minus')
+        // minusbutton.setAttribute('disabled', true)
+        // minusbutton.style.background = 'grey';
+        // let multibutton = document.querySelector('#multiply')
+        // multibutton.setAttribute('disabled', true)
+        // multibutton.style.background = 'grey';
+        // let dividebutton = document.querySelector('#divide')
+        // dividebutton.setAttribute('disabled', true)
+        // dividebutton.style.background = 'grey';
+        // let equalbutton = document.querySelector('#equal')
+        // equalbutton.setAttribute('disabled', true);
+        // equalbutton.style.background = 'grey';
         zeroStatus = true;
       }
       // else {
@@ -238,13 +263,17 @@ operations.forEach((button) => {
     }
 
     
+
+    
     //Update screen
     if (userInput.length === 0){
       screen.textContent = 0
     }
     else {
+      
     screen.textContent = userInput.join(' ')
     console.log(`Updating the screen where length of user input not zero: ${userInput} and type ${typeof userInput}`)
+   
   }
   console.log(`Operations done here? First op: ${firstOperator} second op: ${secondOperator} user input: ${userInput}`)
   })
