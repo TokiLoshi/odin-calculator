@@ -101,4 +101,6 @@ h2 {
 #clear {
   background: rgb(243, 123, 11);
   margin-top: 15px;
+  color: rgb(244, 206, 169);
+  cursor: pointer;
 }
