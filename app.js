@@ -179,6 +179,9 @@ operations.forEach((button) => {
         secondOperator = '/' 
       }
     }
+    else if (opclick === 'point'){
+      console.log(`Need to deal with points`)
+    }
     console.log(`End assigning operators in Event Listener: ${firstOperator} and second ${secondOperator}`)
 
     if (opclick === 'equal' && firstOperator !== ''){
@@ -246,9 +249,7 @@ operations.forEach((button) => {
     }
     }
 
-    // I know this is going to cause bugs later
-    // User wants to compute the answer 
-
+    // Remove everything if user wants to clear 
     if (opclick === 'clear'){
       userInput = []
       firstOperator = ""
@@ -259,9 +260,6 @@ operations.forEach((button) => {
       }
     }
 
-    
-
-    
     //Update screen
     if (userInput.length === 0){
       screen.textContent = 0
