@@ -208,12 +208,15 @@ operations.forEach((button) => {
       }
       // else {
       if (secondOperator !== ''){
-        if (userInput === NaN){
-          userInput = "ERROR"
+        if (isNaN(userInput)){
+          userInput = ["ERROR"]
           console.log(`We got an error: ${userInput} please disable buttons`)
           disableButtons()
           console.log("Finished running disable buttons function")
+          zeroStatus = true;
+
         }
+      
       console.log(`We're running else statment in line 213 on ${userInput} where firstop ${firstOperator} and ${secondOperator}`)
       userInput.push(secondOperator)
     }
