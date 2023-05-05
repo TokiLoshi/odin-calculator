@@ -53,11 +53,24 @@ function parseInput(userInput){
   
   // Set up the variables we'll need to change
   let problem = Array.from(userInput)
-  const lengthInput = problem.length
+
+  // Remove any commas from the array
+  let lengthInput = problem.length
   let firstNum = 0;
   let operand = "";
   let secondNum = 0;
   let answer = 0;
+
+  if (problem.includes(',')){
+    console.log(`There's a comma`)
+    let comma = problem.indexOf(',')
+    problem.splice(comma, 1)
+    console.log(`Cleaned of comma: ${problem}`)
+  }
+  else{
+    console.log(`Didn't find a comma`)
+  }
+  lengthInput = problem.length
 
   for(i=0; i <= lengthInput - 1; i++){ 
 
@@ -203,7 +216,8 @@ operations.forEach((button) => {
     // Get the answer if equals button clicked
     if (opclick === 'equal' && firstOperator !== ''){
       console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
-      answer = parseInput(userInput)
+      answer = parseInput(userInput).toLocaleString("en-US")
+      console.log(`Number and type: ${answer} is a ${typeof answer} and locale ${answer.toLocaleString("en-US")}`)
       userInput = [answer]
       firstOperator = ''
       secondOperator = ''
@@ -231,11 +245,11 @@ operations.forEach((button) => {
       if (typeof endUnit === NaN){
         let toCompute = userInput.slice(0, (userInput.length -1))
       console.log(`To compute: ${toCompute}`)
-      answer = parseInput(toCompute)
+      answer = parseInput(toCompute).toLocaleString("en-US")
       }
       else{
         console.log(`Else statement activated so no slicing just computing ${userInput} and op1 ${firstOperator} and 2nd op ${secondOperator}`)
-        answer = parseInput(userInput)
+        answer = parseInput(userInput).toLocaleString("en-US")
       }
       // let toCompute = userInput.slice(0, (userInput.length -1))
       // console.log(`To compute: ${toCompute}`)
@@ -263,11 +277,15 @@ operations.forEach((button) => {
         }
         
         else if (isNaN(userInput)){
+          if (userInput.includes(',')){
+            console.log(`Doesn't have a comma: ${!userInput.includes(',')}`)
+            
           userInput = ["ERROR"]
           console.log(`We got an error: ${userInput} please disable buttons`)
           disableButtons()
           console.log("Finished running disable buttons function")
           zeroStatus = true;
+        }
         }
       
       console.log(`We're running else statment in line 213 on ${userInput} where firstop ${firstOperator} and ${secondOperator}`)
