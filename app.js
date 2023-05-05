@@ -249,14 +249,20 @@ operations.forEach((button) => {
 
       // Don't let the uzer Divide by zero
       if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
-        userInput = userInput
+        // userInput = userInput
         // Disable buttons from further operations 
         disableButtons()
         zeroStatus = true;
       }
       // else {
       if (secondOperator !== ''){
-        if (isNaN(userInput)){
+        if (answer === "Error! Dividing by zero? 😔"){
+          userInput = [answer]
+          disableButtons()
+          zeroStatus = true;
+        }
+        
+        else if (isNaN(userInput)){
           userInput = ["ERROR"]
           console.log(`We got an error: ${userInput} please disable buttons`)
           disableButtons()
@@ -303,6 +309,7 @@ if (input){
   console.log(`What's being returned: ${input}`)
 }
 
+// Disable for points and if 
 function disableButtons() {
   let addbutton = document.querySelector('#plus')
         addbutton.setAttribute('disabled', true);
