@@ -120,18 +120,17 @@ function getInput(){
   button.addEventListener('click', () => {
     const numclick = button.id
     userInput.push(numclick)
-    screen.textContent = userInput.join(' ')
-    
+    screen.textContent = userInput.join(' ') 
   })
 })
 
-// Operation buttons 
+// Get value of the operation buttons 
 const operations = document.querySelectorAll('.opbutton')
 operations.forEach((button) => {
   button.addEventListener('click', () => {
     const opclick = button.id
 
-    // Assign operators if clicked 
+    // Assign operators to buttons being clicked 
     if (opclick === 'plus'){
       userInput.push('+')
       if (firstOperator === ""){
@@ -171,9 +170,10 @@ operations.forEach((button) => {
     else if (opclick === 'point'){
       let point = document.querySelector('#point')
       userInput.push('.')
-      console.log("Point button should be disabled")
     }
+
     console.log(`End assigning operators in Event Listener: ${firstOperator} and second ${secondOperator}`)
+    
     // Point should be disabled if it's already in use
     if (userInput.includes('.')){
       let pointIndex = userInput.indexOf('.')
@@ -185,6 +185,7 @@ operations.forEach((button) => {
         point.style.background = 'grey'
       }
       else if(firstOperator !== '' && secondOperator === '' && inputAfterPoint.includes('.')){
+        console.log(`We have a point and two operators 1=> ${firstOperator} and ${secondOperator}`)
         point.disabled = true;
         point.style.background = 'grey';
       }
@@ -194,7 +195,6 @@ operations.forEach((button) => {
       }
       
     }
-
 
     if (opclick === 'equal' && firstOperator !== ''){
       console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
@@ -217,9 +217,9 @@ operations.forEach((button) => {
 
     // User wants to evaluate multiple numbers - do first pair
     let lastElement = userInput.slice(-1)
-    console.log(`Do they equal? ${lastElement} type ${lastElement} ${lastElement === '.'} `)
+    console.log(`Do they equal? ${lastElement} type ${typeof lastElement} ${lastElement.includes('.')} `)
     console.log(`It's about to try compute and last index is: ${lastElement}`) 
-    if (firstOperator !== '' && secondOperator !== '' && lastElement !== '.'){
+    if (firstOperator !== '' && secondOperator !== '' ){
       console.log(`User Input before slicing to compute: ${userInput}`)
       console.log(`End unit: ${userInput[userInput.length - 1]}`)
       let endUnit = userInput[userInput.length - 1]
@@ -229,8 +229,10 @@ operations.forEach((button) => {
       answer = parseInput(toCompute)
       }
       else{
+        if (!lastElement.includes('.')){
         console.log(`Else statement activated so no slicing just computing ${userInput} and op1 ${firstOperator} and 2nd op ${secondOperator}`)
         answer = parseInput(userInput)
+      }
       }
       // let toCompute = userInput.slice(0, (userInput.length -1))
       // console.log(`To compute: ${toCompute}`)
