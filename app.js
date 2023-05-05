@@ -51,6 +51,7 @@ function parseInput(userInput){
   
   console.log(`In parse function with ${userInput}`)
   
+  // Set up the variables we'll need to change
   let problem = Array.from(userInput)
   const lengthInput = problem.length
   let firstNum = 0;
@@ -63,74 +64,62 @@ function parseInput(userInput){
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       console.log(`We have an operand ${problem[i]} at iteration ${i}`)
+      // First number should be everything before the operand
       firstNum = parseFloat(problem.slice(0, i).join(''))
       operand = problem[i]
+      // Second number should be everything after the operand
       secondNum = parseFloat(problem.slice(i+1).join(''))
 
-      console.log(`First num: ${firstNum}`)
-      console.log(`Type first num: ${typeof firstNum}`)
-      console.log(`Operand: ${operand}`)
-      console.log(`Type of operand: ${operand}`)
-      console.log(`Second num: ${secondNum}`)
-      console.log(`Type of second num: ${typeof secondNum}`)
-
-      // Answer should be updated with operate on first and second number
+      // Calculate the answer using operator function
       answer = operate(firstNum, operand, secondNum)
-      if (isNaN(answer)) {
-        console.log("***Answer returned not a Number !$#%&*")
+
+      // Handle error cases dividing by zero and answer being not a number
+      if (answer === "Error! Dividing by zero? 😔"){
+        answer = "Error! Dividing by zero? 😔"
+      }
+      else if (isNaN(answer)) {
         answer = "Error"
       }
-      // Check if the number is whole or decimal to parse int or float 
+      
+      // Handle possible decimal point screen overflow
       else if (answer - Math.floor(answer) !== 0){
-        console.log(`This is a decimal ${answer - Math.floor(answer)}`)
-        
-        // Find the index of decimal point if more than 10 places cap to 5
+        // Find the length of everything after the decimal to cap decimals at 5places
         let tempAnswer = answer.toString()
         let decimalPoint = tempAnswer.indexOf(".")
-        
         let decimalPart = tempAnswer.split(".")[1]
-        console.log(`Decimal part ${decimalPart}`)
-        console.log(`Decimal point ${decimalPoint}`)
-       
+ 
         if (decimalPoint && decimalPart.length > 5){
           console.log(`What is this: ${decimalPart} and type ${decimalPart.length}`)
           answer = answer.toFixed(5)
         }
-        console.log(`Index of decimal point ${decimalPoint}`)
-        console.log(`Trying to split away from decimal point: ${decimalPart}`)
-
       }
+      
+      // If number is whole make it an int so we don't see a decimal point
       else { 
-        console.log(`Looks like a whole number ${answer}`)
         answer = parseInt(answer)
       }
       console.log(`Answer from parse: ${answer} which is type ${typeof answer}`)
-     
+      
       return answer;
     }
   }
   // return answer;
 }
 
-// Store everything in array 
+// Store everything in array to display on screen
 function getInput(){
-  // Add eventlisteners to all buttons
   let userInput = []
-
-  // Update screen as user adds input
   const screen = document.querySelector('.screen')
   let firstOperator = ""
   let secondOperator = ""
   let zeroStatus = false
 
-  // Get the number buttons 
+  // Get value of the number buttons 
   const buttons = document.querySelectorAll('.numbutton')
   buttons.forEach((button) => {
   button.addEventListener('click', () => {
     const numclick = button.id
-
     userInput.push(numclick)
-    console.log(`UserInput has been updated by number button ${userInput}`)
     screen.textContent = userInput.join(' ')
     
   })
@@ -180,9 +169,32 @@ operations.forEach((button) => {
       }
     }
     else if (opclick === 'point'){
-      console.log(`Need to deal with points`)
+      let point = document.querySelector('#point')
+      userInput.push('.')
+      console.log("Point button should be disabled")
     }
     console.log(`End assigning operators in Event Listener: ${firstOperator} and second ${secondOperator}`)
+    // Point should be disabled if it's already in use
+    if (userInput.includes('.')){
+      let pointIndex = userInput.indexOf('.')
+      let inputAfterPoint = userInput.slice(pointIndex + 1)
+      console.log(`Point index: ${pointIndex}`)
+      console.log(`Rest of input after point: ${inputAfterPoint}`)
+      if (firstOperator === ''){
+        point.setAttribute('disabled', true)
+        point.style.background = 'grey'
+      }
+      else if(firstOperator !== '' && secondOperator === '' && inputAfterPoint.includes('.')){
+        point.disabled = true;
+        point.style.background = 'grey';
+      }
+      else{
+        point.disabled = false;
+        point.style.background = 'rgb(137, 28, 253)';
+      }
+      
+    }
+
 
     if (opclick === 'equal' && firstOperator !== ''){
       console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
@@ -203,8 +215,11 @@ operations.forEach((button) => {
       console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
     }
 
-    // User wants to evaluate multiple numbers - do first pair 
-    if (firstOperator !== '' && secondOperator !== ''){
+    // User wants to evaluate multiple numbers - do first pair
+    let lastElement = userInput.slice(-1)
+    console.log(`Do they equal? ${lastElement} type ${lastElement} ${lastElement === '.'} `)
+    console.log(`It's about to try compute and last index is: ${lastElement}`) 
+    if (firstOperator !== '' && secondOperator !== '' && lastElement !== '.'){
       console.log(`User Input before slicing to compute: ${userInput}`)
       console.log(`End unit: ${userInput[userInput.length - 1]}`)
       let endUnit = userInput[userInput.length - 1]
@@ -254,6 +269,8 @@ operations.forEach((button) => {
       userInput = []
       firstOperator = ""
       secondOperator = ""
+      point.disabled = false;
+      point.style.background =  'rgb(137, 28, 253)';
       console.log(`User wanted to clear and it is now ${userInput.length}`)
       if (zeroStatus === true) {
       location.reload();
@@ -297,6 +314,10 @@ function disableButtons() {
         let equalbutton = document.querySelector('#equal')
         equalbutton.setAttribute('disabled', true);
         equalbutton.style.background = 'grey';
+        let pointbutton = document.querySelector('#point')
+        pointbutton.setAttribute('disabled', true); 
+        pointbutton.style.background = 'grey';
+
 }
 
 

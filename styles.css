@@ -39,11 +39,12 @@ h2 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin:20px;
+  margin: 5px 15px;
 }
 .numbutton {
   width: 60px;
   margin: 10px;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .numbutton, .opbutton {
@@ -77,6 +78,7 @@ h2 {
   background-color: rgb(137, 28, 253);
   color: white;
   margin-bottom: 10px;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .operators button:hover{
@@ -94,4 +96,9 @@ h2 {
 }
 .credit a{
   color: white;
+}
+
+#clear {
+  background: rgb(243, 123, 11);
+  margin-top: 15px;
 }
