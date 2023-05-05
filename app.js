@@ -63,9 +63,9 @@ function parseInput(userInput){
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       console.log(`We have an operand ${problem[i]} at iteration ${i}`)
-      firstNum = parseInt(problem.slice(0, i).join(''))
+      firstNum = parseFloat(problem.slice(0, i).join(''))
       operand = problem[i]
-      secondNum = parseInt(problem.slice(i+1).join(''))
+      secondNum = parseFloat(problem.slice(i+1).join(''))
 
       console.log(`First num: ${firstNum}`)
       console.log(`Type first num: ${typeof firstNum}`)
@@ -76,11 +76,36 @@ function parseInput(userInput){
 
       // Answer should be updated with operate on first and second number
       answer = operate(firstNum, operand, secondNum)
-      console.log(`Answer from parse: ${answer} which is type ${typeof answer}`)
-      if (answer === NaN) {
+      if (isNaN(answer)) {
         console.log("***Answer returned not a Number !$#%&*")
         answer = "Error"
       }
+      // Check if the number is whole or decimal to parse int or float 
+      else if (answer - Math.floor(answer) !== 0){
+        console.log(`This is a decimal ${answer - Math.floor(answer)}`)
+        
+        // Find the index of decimal point if more than 10 places cap to 5
+        let tempAnswer = answer.toString()
+        let decimalPoint = tempAnswer.indexOf(".")
+        
+        let decimalPart = tempAnswer.split(".")[1]
+        console.log(`Decimal part ${decimalPart}`)
+        console.log(`Decimal point ${decimalPoint}`)
+       
+        if (decimalPoint && decimalPart.length > 5){
+          console.log(`What is this: ${decimalPart} and type ${decimalPart.length}`)
+          answer = answer.toFixed(5)
+        }
+        console.log(`Index of decimal point ${decimalPoint}`)
+        console.log(`Trying to split away from decimal point: ${decimalPart}`)
+
+      }
+      else { 
+        console.log(`Looks like a whole number ${answer}`)
+        answer = parseInt(answer)
+      }
+      console.log(`Answer from parse: ${answer} which is type ${typeof answer}`)
+     
       return answer;
     }
   }
@@ -214,7 +239,6 @@ operations.forEach((button) => {
           disableButtons()
           console.log("Finished running disable buttons function")
           zeroStatus = true;
-
         }
       
       console.log(`We're running else statment in line 213 on ${userInput} where firstop ${firstOperator} and ${secondOperator}`)
@@ -224,7 +248,6 @@ operations.forEach((button) => {
 
     // I know this is going to cause bugs later
     // User wants to compute the answer 
-    
 
     if (opclick === 'clear'){
       userInput = []
