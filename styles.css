@@ -29,8 +29,9 @@ h2 {
   border: 2px solid rgb(93, 91, 91);
   border-radius: 5px;
   padding: 10px;
-  font-family: papyrus;
-  font-family: 'Rubik Pixels', cursive;
+  /* font-family: papyrus;
+  font-family: 'Rubik Pixels', cursive; */
+  font-family: 'Orbitron', sans-serif;
   font-size: 42px;
   color: black;
 }
