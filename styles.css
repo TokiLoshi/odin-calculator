@@ -5,6 +5,7 @@ body {
   margin: 0;
   margin-top: 30px;
 
+
 }
 h2 {
   color: white;
@@ -24,11 +25,14 @@ h2 {
 .screen {
   text-align: center;
   background: rgb(196, 177, 177);
-  color: black;
+
   border: 2px solid rgb(93, 91, 91);
   border-radius: 5px;
   padding: 10px;
   font-family: papyrus;
+  font-family: 'Rubik Pixels', cursive;
+  font-size: 42px;
+  color: black;
 }
 .numberpad {
   display: flex;
@@ -36,11 +40,16 @@ h2 {
   flex-wrap: wrap;
   margin:20px;
 }
+.numbutton {
+  width: 60px;
+}
 
 .numbutton, .opbutton {
   background: rgb(228, 244, 228);
   color: black;
   padding: 15px;
+
+  text-align: center;
   margin: 10px;
   border-radius: 20px;
 
