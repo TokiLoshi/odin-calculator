@@ -65,10 +65,10 @@ function parseInput(userInput){
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       console.log(`We have an operand ${problem[i]} at iteration ${i}`)
       // First number should be everything before the operand
-      firstNum = parseFloat(problem.slice(0, i).join(''))
+      firstNum = Number.parseFloat(problem.slice(0, i).join(''))
       operand = problem[i]
       // Second number should be everything after the operand
-      secondNum = parseFloat(problem.slice(i+1).join(''))
+      secondNum = Number.parseFloat(problem.slice(i+1).join(''))
 
       // Calculate the answer using operator function
       answer = operate(firstNum, operand, secondNum)
@@ -83,14 +83,18 @@ function parseInput(userInput){
       
       // Handle possible decimal point screen overflow
       else if (answer - Math.floor(answer) !== 0){
-        // Find the length of everything after the decimal to cap decimals at 5places
+        // Find the length of everything after the decimal to cap decimals at 3 places
         let tempAnswer = answer.toString()
         let decimalPoint = tempAnswer.indexOf(".")
         let decimalPart = tempAnswer.split(".")[1]
- 
-        if (decimalPoint && decimalPart.length > 5){
+
+        console.log(`Is it decimal? ${answer - Math.floor(answer)}`)
+        console.log(`Index of decimal Point ${decimalPoint}`)
+        console.log(`Decimal Part: ${decimalPart}`)
+        
+        if (decimalPoint && decimalPart.length > 3){
           console.log(`What is this: ${decimalPart} and type ${decimalPart.length}`)
-          answer = answer.toFixed(5)
+          answer = answer.toFixed(3)
         }
       }
       
@@ -196,6 +200,7 @@ operations.forEach((button) => {
       
     }
 
+    // Get the answer if equals button clicked
     if (opclick === 'equal' && firstOperator !== ''){
       console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
       answer = parseInput(userInput)
@@ -203,23 +208,23 @@ operations.forEach((button) => {
       firstOperator = ''
       secondOperator = ''
 
-      // Don't let them divide by zero
-      if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
-        userInput = userInput
-        disableButtons()
-        zeroStatus = true;
-      }
-      userInput = [answer]
-      firstOperator = ''
-      secondOperator = ''
-      console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
+    // Don't let them divide by zero
+    if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
+      userInput = userInput
+      disableButtons()
+      zeroStatus = true;
+    }
+    userInput = [answer]
+    firstOperator = ''
+    secondOperator = ''
+    console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
     }
 
     // User wants to evaluate multiple numbers - do first pair
     let lastElement = userInput.slice(-1)
     console.log(`Do they equal? ${lastElement} type ${typeof lastElement} ${lastElement.includes('.')} `)
     console.log(`It's about to try compute and last index is: ${lastElement}`) 
-    if (firstOperator !== '' && secondOperator !== '' ){
+    if (firstOperator !== '' && secondOperator !== '' && !lastElement.includes('.')){
       console.log(`User Input before slicing to compute: ${userInput}`)
       console.log(`End unit: ${userInput[userInput.length - 1]}`)
       let endUnit = userInput[userInput.length - 1]
@@ -229,10 +234,8 @@ operations.forEach((button) => {
       answer = parseInput(toCompute)
       }
       else{
-        if (!lastElement.includes('.')){
         console.log(`Else statement activated so no slicing just computing ${userInput} and op1 ${firstOperator} and 2nd op ${secondOperator}`)
         answer = parseInput(userInput)
-      }
       }
       // let toCompute = userInput.slice(0, (userInput.length -1))
       // console.log(`To compute: ${toCompute}`)
