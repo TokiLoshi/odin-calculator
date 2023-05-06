@@ -49,8 +49,6 @@ function operate(firstNum, operator, secondNum){
 
 function parseInput(userInput){
   
-  console.log(`In parse function with ${userInput}`)
-  
   // Set up the variables we'll need to change
   let problem = Array.from(userInput)
 
@@ -62,14 +60,9 @@ function parseInput(userInput){
   let answer = 0;
 
   for(i=0; i <= lengthInput - 1; i++){ 
-    console.log(`Element in array: ${problem[i]}`)
-    
-    // Clean the arraye cleanedArray = problem.filter(!== ',')
 
-    console.log(`Problem: ${problem}`)
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
-      console.log(`We have an operand ${problem[i]} at iteration ${i}`)
       // First number should be everything before the operand and remove any commas
       firstNum = Number.parseFloat(problem.slice(0, i).join('').replace(',', ''))
       operand = problem[i]
@@ -93,13 +86,8 @@ function parseInput(userInput){
         let tempAnswer = answer.toString()
         let decimalPoint = tempAnswer.indexOf(".")
         let decimalPart = tempAnswer.split(".")[1]
-
-        console.log(`Is it decimal? ${answer - Math.floor(answer)}`)
-        console.log(`Index of decimal Point ${decimalPoint}`)
-        console.log(`Decimal Part: ${decimalPart}`)
         
         if (decimalPoint && decimalPart.length > 3){
-          console.log(`What is this: ${decimalPart} and type ${decimalPart.length}`)
           answer = answer.toFixed(3)
         }
       }
@@ -108,8 +96,6 @@ function parseInput(userInput){
       else { 
         answer = parseInt(answer)
       }
-      console.log(`Answer from parse: ${answer} which is type ${typeof answer}`)
-      
       return answer;
     }
   }
@@ -181,21 +167,16 @@ operations.forEach((button) => {
       let point = document.querySelector('#point')
       userInput.push('.')
     }
-
-    console.log(`End assigning operators in Event Listener: ${firstOperator} and second ${secondOperator}`)
     
     // Point should be disabled if it's already in use
     if (userInput.includes('.')){
       let pointIndex = userInput.indexOf('.')
       let inputAfterPoint = userInput.slice(pointIndex + 1)
-      console.log(`Point index: ${pointIndex}`)
-      console.log(`Rest of input after point: ${inputAfterPoint}`)
       if (firstOperator === ''){
         point.setAttribute('disabled', true)
         point.style.background = 'grey'
       }
       else if(firstOperator !== '' && secondOperator === '' && inputAfterPoint.includes('.')){
-        console.log(`We have a point and two operators 1=> ${firstOperator} and ${secondOperator}`)
         point.disabled = true;
         point.style.background = 'grey';
       }
@@ -203,14 +184,11 @@ operations.forEach((button) => {
         point.disabled = false;
         point.style.background = 'rgb(137, 28, 253)';
       }
-      
     }
 
     // Get the answer if equals button clicked
     if (opclick === 'equal' && firstOperator !== ''){
-      console.log(`User hit equals on ${userInput} where ${firstOperator} and second ${secondOperator}`)
       answer = parseInput(userInput).toLocaleString("en-US")
-      console.log(`Number and type: ${answer} is a ${typeof answer} and locale ${answer.toLocaleString("en-US")}`)
       userInput = [answer]
       firstOperator = ''
       secondOperator = ''
@@ -224,35 +202,20 @@ operations.forEach((button) => {
     userInput = [answer]
     firstOperator = ''
     secondOperator = ''
-    console.log(`After parsing equals answer we have first op ${firstOperator} which is a type ${typeof firstOperator} and second op ${secondOperator} a type of ${secondOperator} and ${userInput} which is type ${typeof userInput}`)
     }
 
     // User wants to evaluate multiple numbers - do first pair
     let lastElement = userInput.slice(-1)
-    console.log(`Do they equal? ${lastElement} type ${typeof lastElement} ${lastElement.includes('.')} `)
-    console.log(`It's about to try compute and last index is: ${lastElement}`) 
     if (firstOperator !== '' && secondOperator !== '' && !lastElement.includes('.')){
-      console.log(`User Input before slicing to compute: ${userInput}`)
-      console.log(`End unit: ${userInput[userInput.length - 1]}`)
       let endUnit = userInput[userInput.length - 1]
       if (typeof endUnit === NaN){
         let toCompute = userInput.slice(0, (userInput.length -1))
-      console.log(`To compute: ${toCompute}`)
       answer = parseInput(toCompute).toLocaleString("en-US")
       }
       else{
-        console.log(`Else statement activated so no slicing just computing ${userInput} and op1 ${firstOperator} and 2nd op ${secondOperator}`)
         answer = parseInput(userInput).toLocaleString("en-US")
       }
-      // let toCompute = userInput.slice(0, (userInput.length -1))
-      // console.log(`To compute: ${toCompute}`)
-      // answer = parseInput(toCompute)
-      console.log(`Getting an answer in else: ${answer} type ${typeof answer} to update user input ${userInput}`)
       userInput = [answer]
-      console.log(`After answer first: ${firstOperator}`)
-      console.log(`After anser second operator: ${secondOperator}`)
-      console.log(`After getting answer the user in put is: ${userInput}`) 
-
 
       // Don't let the uzer Divide by zero
       if (answer === "Error! Dividing by zero? 😔" || userInput.includes("Error! Dividing by zero?")){
@@ -271,17 +234,11 @@ operations.forEach((button) => {
         
         else if (isNaN(userInput)){
           if (userInput.includes(',')){
-            console.log(`Doesn't have a comma: ${!userInput.includes(',')}`)
-            
           userInput = ["ERROR"]
-          console.log(`We got an error: ${userInput} please disable buttons`)
           disableButtons()
-          console.log("Finished running disable buttons function")
           zeroStatus = true;
         }
         }
-      
-      console.log(`We're running else statment in line 213 on ${userInput} where firstop ${firstOperator} and ${secondOperator}`)
       userInput.push(secondOperator)
     }
     }
@@ -293,9 +250,8 @@ operations.forEach((button) => {
       secondOperator = ""
       point.disabled = false;
       point.style.background =  'rgb(137, 28, 253)';
-      console.log(`User wanted to clear and it is now ${userInput.length}`)
       if (zeroStatus === true) {
-      location.reload();
+        location.reload();
       }
     }
 
@@ -306,19 +262,12 @@ operations.forEach((button) => {
     else {
       
     screen.textContent = userInput.join(' ')
-    console.log(`Updating the screen where length of user input not zero: ${userInput} and type ${typeof userInput}`)
-   
   }
-  console.log(`Operations done here? First op: ${firstOperator} second op: ${secondOperator} user input: ${userInput}`)
   })
 })
- 
 }
 
 let input = getInput()
-if (input){
-  console.log(`What's being returned: ${input}`)
-}
 
 // Disable for points and if 
 function disableButtons() {
@@ -343,72 +292,13 @@ function disableButtons() {
 
 }
 
-
-// Debugging: 
-// Test only using equals after an operation
-// 1) ***PASSES*** 1 (+) 2 (=) => 3 
-// 2) ***PASSES*** 1 (+) 6 (=) => 7 (+) 3 (=) => 10
-
-// Test using multiple operations 
-// 3)  ***PASSES*** 1 (+) 4 (+) => 5 +
-
-// Test using equals first and then multiple operations 
-// 4) ***PASSES*** 1 (+) 5 (=) => 6 + 4 + => 10 + 
-// 5) ***PASSES*** 1 (+) 6 (=) => 7 (+) 3 (+) => 10+ 5 (+) => 15
-
-// Test using multiple operations first and then equals
-// 6) ***PASSES*** 1 (+) 5 (+) => 6 (+) 4 (=) => 10
-
-// 7) ***PASSES*** 1 (+) 5 (+) => 6 + 4 (=) => 10 (+) 5 (=) => 15
-// 8) ***PASSES*** 1 (+) 5 (+) => 6 + 4 (=) => 10 (+) 5 (+) => 15+
-
-// Test using equals first and then multiple operations then equals
-// 9) ****PASSES*** 1 (+) 6 (=) => 7 + 3 + => 10 + 5 (=) => 15
-
-// Test using equals first and then multiple operations then equals then multiple operations
-// 10) ***PASSES**** 1 (+) 6 (=) => 7 (+) 3 (+) => 10 + 5 (=) => 15 (+) 5 (+) => 20+
-
-
-    // This part of operator button from the getInput functions
-    // else if (opclick === 'equal'){
-    //   userInput.join(' ')
-    //   let answer = parseInput(userInput)
-    //   console.log(`We got the answer back in operations function: ${answer}`)
-    //   userInput = [answer]
-    //   screen.textContent = userInput
-    // }
-    // else if (opclick === 'plus'){
-    //   operatorbutton = '+'
-    //   userInput.push(operatorbutton)
-    // }
-    // else if(opclick === 'minus'){
-    //   userInput.push('-')
-    // }
-    // else if(opclick === 'divide'){
-    //   userInput.push('/')
-    // }
-    // else if(opclick === 'multiply'){
-    //   userInput.push('x')
-    // }
-    // else if(opclick === 'clear'){
-    //   userInput = [0]
-    // }
-    // else {
-    //   userInput.push(opclick)
-    // }
-
-
-
-
-
       // // From ParseInput Function: 
-      // This allowed users to input multiple operations 
+      // This allowed users to input multiple operations while the code above evaluates only on number pair at a time
       // if(i === lengthInput -1){
       //   return answer}
       //   else{
       //     operand = problem[i]
       //   }
-      
       // if the count is zero this is our first time assigning firstNum
       // if (count === 0){
       //   console.log(`This is our first time assigning firstNum (currently ${firstNum})`)
