@@ -61,24 +61,17 @@ function parseInput(userInput){
   let secondNum = 0;
   let answer = 0;
 
-  if (problem.includes(',')){
-    console.log(`There's a comma`)
-    let comma = problem.indexOf(',')
-    problem.splice(comma, 1)
-    console.log(`Cleaned of comma: ${problem}`)
-  }
-  else{
-    console.log(`Didn't find a comma`)
-  }
-  lengthInput = problem.length
-
   for(i=0; i <= lengthInput - 1; i++){ 
+    console.log(`Element in array: ${problem[i]}`)
+    
+    // Clean the arraye cleanedArray = problem.filter(!== ',')
 
+    console.log(`Problem: ${problem}`)
     // If we have an operand we can do math
     if (problem[i] === '+' || problem[i] === '-' || problem[i] === 'x' || problem[i] === '/'){
       console.log(`We have an operand ${problem[i]} at iteration ${i}`)
-      // First number should be everything before the operand
-      firstNum = Number.parseFloat(problem.slice(0, i).join(''))
+      // First number should be everything before the operand and remove any commas
+      firstNum = Number.parseFloat(problem.slice(0, i).join('').replace(',', ''))
       operand = problem[i]
       // Second number should be everything after the operand
       secondNum = Number.parseFloat(problem.slice(i+1).join(''))
